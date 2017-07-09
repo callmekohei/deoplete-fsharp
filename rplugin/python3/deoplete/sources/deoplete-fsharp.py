@@ -43,11 +43,11 @@ class Source(Base):
         fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin_deopletefs/deopletefs.exe') )
 
         post_data = {
-              "Row"      : 0
-            , "Col"      : 1
-            , "Line"     : '' # Row 0 
+              "Row"      : -9999 # dummy row
+            , "Col"      : -9999 # dummy col
+            , "Line"     : ''    # dummy line
             , "FilePath" : self.filePath
-            , "Source"   : '\n'.join( getlines( self.vim ) )
+            , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
             , "Init"     : 'dummy_init'
         }
         
@@ -69,11 +69,11 @@ class Source(Base):
             self.vim.command("echo 'finish initialize! ( time : " + str(round(elapsed_time,6)) + " s )'")
 
             post_data = {
-                  "Row"      : 0
+                  "Row"      : 1
                 , "Col"      : 1
-                , "Line"     : '' # Row 0 
+                , "Line"     : ''
                 , "FilePath" : self.filePath
-                , "Source"   : '\n'.join( getlines( self.vim ) )
+                , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
                 , "Init"     : 'real_init'
             }
 
@@ -95,11 +95,11 @@ class Source(Base):
         try:
 
             post_data = {
-                  "Row"      : context['position'][1]
-                , "Col"      : context['complete_position'] + 1
+                  "Row"      : context['position'][1] + 1       # To plus 1 is dummy line.
+                , "Col"      : context['complete_position'] + 1 # To plus 1 is that doeplete is col-base 0 but deopletefs needs col-base 1.
                 , "Line"     : context['input']
                 , "FilePath" : self.filePath
-                , "Source"   : '\n'.join( getlines( self.vim ) )
+                , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
                 , "Init"     : 'false'
             }
 
