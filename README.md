@@ -2,7 +2,7 @@
 
 F# support for Neovim
 
-using [deopletefs](https://github.com/callmekohei/deopletefs)
+using [deopletefs](https://github.com/callmekohei/deopletefs), [quickrunfs](https://github.com/callmekohei/quickrunfs)
 
 ## Like this
 
