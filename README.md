@@ -1,3 +1,6 @@
+[![MIT-LICENSE](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/callmekohei/deoplete-fsharp/blob/master/LICENSE)
+
+
 # deoplete-fsharp
 
 F# support for Neovim
@@ -34,10 +37,3 @@ let g:deoplete#enable_at_startup = 1
 : w
 : QUICKRUNfs
 ```
-
-<br>
-<br>
-
-
-## LICENCE  
-The MIT License (MIT)
