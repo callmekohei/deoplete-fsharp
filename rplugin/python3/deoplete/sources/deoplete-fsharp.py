@@ -20,7 +20,7 @@ except ImportError:
 
 from deoplete.source.base import Base
 from deoplete.util import getlines, expand
-
+from deoplete.util import debug
 
 class Source(Base):
 
@@ -95,8 +95,8 @@ class Source(Base):
         try:
 
             post_data = {
-                  "Row"      : context['position'][1] + 1       # To plus 1 is dummy line.
-                , "Col"      : context['complete_position'] + 1 # To plus 1 is that doeplete is col-base 0 but deopletefs needs col-base 1.
+                  "Row"      : context['position'][1] + 1  # To plus 1 is dummy line.
+                , "Col"      : context['complete_position'] 
                 , "Line"     : context['input']
                 , "FilePath" : self.filePath
                 , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
