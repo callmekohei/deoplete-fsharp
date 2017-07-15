@@ -8,7 +8,7 @@ augroup deoplete-fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:create_temporary_file()
     autocmd  VimLeavePre        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file() 
-    autocmd  VimLeavePre        *.fs,*.fsi,*.fsx  call s:cleanup()
+    autocmd  VimLeave           *.fs,*.fsi,*.fsx  call s:cleanup()
     autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
     autocmd  InsertLeave        *.fs,*.fsi,*.fsx  :silent execute ":write! !tee | (echo '// dummy line' && cat) > " . s:create_temporary_filePath()
     autocmd  InsertEnter        *.fs,*.fsi,*.fsx  :silent execute ":write! !tee | (echo '// dummy line' && cat) > " . s:create_temporary_filePath() 
