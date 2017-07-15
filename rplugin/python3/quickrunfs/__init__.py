@@ -18,21 +18,17 @@ import time
 class quickrunfsHeader(object):
 
     def __init__(self,vim):
-
         self.vim = vim
-        
-        ext = os.path.splitext( self.vim.current.buffer.name )[1]
-        if (ext == '.fsx') :
-            self.filePath = self.expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
-            fsi_path = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/bin_quickrunfs/quickrunfs.exe') )
-
-            self.util = Util( fsi_path, 10 )
-            self.util.start()
 
 
-    @neovim.autocmd('BufEnter', pattern='*.fsx', sync=False)
-    def reg_quickrun_fs(self):
-        self.vim.command("command! -buffer QUICKRUNfs :call PyQuickRunFs()")
+    @ neovim.function('LaunchFSI', sync = False)
+    def launchFSI(self,arg):
+
+        self.filePath = self.expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
+        fsi_path = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/bin_quickrunfs/quickrunfs.exe') )
+
+        self.util = Util( fsi_path, 10 )
+        self.util.start()
 
 
     def expand(self,path):
@@ -60,12 +56,12 @@ class quickrunfsHeader(object):
         self.vim.command("wincmd p")
 
         self.util.send(self.filePath)
-        
+
         if len(lst) == 0:
             lines = (self.util.read())[1:]
         else:
             lines = self.util.read()
-        
+
         line_number = 0
         for line in lines:
             buf_quickrunfs.append( line.strip(), line_number )
