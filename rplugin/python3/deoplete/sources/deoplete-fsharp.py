@@ -60,10 +60,9 @@ class Source(Base):
         if context['event'] == 'Init':
 
             start = time.time()
+            self.vim.command("echo '*** deopletefs initializing... ***'")
 
-            while self.util.wait_for_deopletefs() :
-                self.vim.command("echo '*** deopletefs initializing... ***'")
-                time.sleep(0.15)
+            self.util.read()
 
             elapsed_time = time.time() - start
             self.vim.command("echo 'finish initialize! ( time : " + str(round(elapsed_time,6)) + " s )'")
@@ -173,12 +172,3 @@ class Util(threading.Thread):
                 list.append( self.lines.get_nowait() )
 
         return list
-
-
-    def wait_for_deopletefs(self):
-        if self.lines.empty():
-            return True
-        else:
-            self.lines.get_nowait()
-            return False
-
