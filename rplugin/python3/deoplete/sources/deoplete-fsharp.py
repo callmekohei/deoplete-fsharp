@@ -31,7 +31,7 @@ class Source(Base):
         self.filetypes = ['fsharp']
 
         # input pattern
-        dotHints           = [ r"(\(|<|[a-zA-Z]|\"|\[)*(?<=(\)|>|[a-zA-Z]|\"|\]))\." ]
+        dotHints           = [ r"(\(|<|[a-zA-Z]|\"|\[)*(?<=(\)|>|[a-zA-Z0-9]|\"|\]))\." ]
         oneWordHints       = [ r"^[a-zA-Z]$", "\s*[a-zA-Z]$", "typeof\<[a-zA-Z]$", "(\(\))[a-zA-Z]$", "(\<|\>)[a-zA-Z]$", "(\[|\])[a-zA-Z]$"  ]
         attributeHints     = [ r"\[<[a-zA-Z]*" ]
         self.input_pattern = '|'.join( dotHints + oneWordHints + attributeHints )
