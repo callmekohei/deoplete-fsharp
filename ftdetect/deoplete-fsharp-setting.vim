@@ -5,6 +5,7 @@ augroup deoplete-fsharp
     autocmd!
     autocmd  BufNewFile,BufRead            *.fsx  call LaunchFSI()
     autocmd  BufNewFile,BufRead            *.fsx  command! -buffer QUICKRUNfs :call PyQuickRunFs()
+    autocmd  BufNewFile,BufRead            *.fsx  command! -buffer Perssiom   :call PyPersimmon()
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:create_temporary_file()
     autocmd  VimLeavePre        *.fs,*.fsi,*.fsx  if v:dying | call s:cleanup_temporary_file() | else | call s:cleanup_temporary_file() | endif
