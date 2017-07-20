@@ -38,17 +38,6 @@ class quickrunfsHeader(object):
     @ neovim.function('PyPersimmon', sync = False)
     def persimon(self,arg):
 
-        command  = ['fsharpc', '-a', self.filePath]
-        p = subprocess.Popen( command, stdout=subprocess.PIPE, universal_newlines=True )
-        out, err = p.communicate()
-        p.kill()
-
-        persimon = "/Users/kohei/Documents/test/packages/Persimmon.Console/tools/Persimmon.Console.exe"
-        fp = os.path.splitext(self.filePath)[0] + ".dll"
-        cmd = [ 'mono', persimon, fp ]
-        process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
-        out, err = process.communicate()
-        process.kill()
 
         start = time.time()
 
@@ -66,6 +55,25 @@ class quickrunfsHeader(object):
         buf_quickrunfs = self.vim.current.buffer
 
         self.vim.command("wincmd p")
+
+
+        ### -----------------------------
+
+        command  = ['fsharpc', '-a', self.filePath]
+        p = subprocess.Popen( command, stdout=subprocess.PIPE, universal_newlines=True )
+        out, err = p.communicate()
+        p.kill()
+
+        persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/bin_deopletefs/tools/Persimmon.Console.exe') )
+        fp = os.path.splitext(self.filePath)[0] + ".dll"
+        cmd = [ 'mono', persimmonConsole, fp ]
+        process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
+        out, err = process.communicate()
+        process.kill()
+        os.remove(fp)
+
+        ### -----------------------------
+
 
         line_number = 0
         for line in out.split('\n'):
