@@ -8,8 +8,8 @@ augroup deoplete-fsharp
     autocmd  BufNewFile,BufRead            *.fsx  command! -buffer Perssiom   :call PyPersimmon()
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:create_temporary_file()
-    autocmd  VimLeavePre        *.fs,*.fsi,*.fsx  if v:dying | call s:cleanup_temporary_file() | else | call s:cleanup_temporary_file() | endif
-    autocmd  VimLeave           *.fs,*.fsi,*.fsx  if v:dying | call s:cleanup() | else | call s:cleanup() | endif
+    autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
+    " autocmd  VimLeave           *.fs,*.fsi,*.fsx  if v:dying | call s:cleanup() | else | call s:cleanup() | endif
     autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
     autocmd  InsertLeave        *.fs,*.fsi,*.fsx  :silent execute ":write! !tee | (echo '// dummy line' && cat) > " . s:create_temporary_filePath()
     autocmd  InsertEnter        *.fs,*.fsi,*.fsx  :silent execute ":write! !tee | (echo '// dummy line' && cat) > " . s:create_temporary_filePath() 
