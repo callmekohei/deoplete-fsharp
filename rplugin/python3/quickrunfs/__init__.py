@@ -62,13 +62,21 @@ class quickrunfsHeader(object):
         p.kill()
 
         # mono Persimmon.Console.exe
-        persimmonConsole_local = self.expand(os.path.dirname( self.filePath ) + "/packages/Persimmon.Console/tools/Persimmon.Console.exe") 
+        persimmonConsole_same_folder     = self.expand(os.path.dirname( self.filePath ) + "/Persimmon.Console.exe")
+        persimmonConsole_tools_folder    = self.expand(os.path.dirname( self.filePath ) + "//tools/Persimmon.Console.exe")
+        persimmonConsole_packages_folder = self.expand(os.path.dirname( self.filePath ) + "/packages/Persimmon.Console/tools/Persimmon.Console.exe")
         persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/tools/Persimmon.Console.exe') )
         fp = os.path.splitext(self.filePath)[0] + ".dll"
-        if os.path.isfile(persimmonConsole_local) :
-            cmd = [ 'mono', persimmonConsole_local, fp ]
+
+        if os.path.isfile(persimmonConsole_same_folder) :
+            cmd = [ 'mono', persimmonConsole_same_folder, fp ]
+        elif os.path.isfile(persimmonConsole_tools_folder) :
+            cmd = [ 'mono', persimmonConsole_tools_folder, fp ]
+        elif os.path.isfile(persimmonConsole_packages_folder) :
+            cmd = [ 'mono', persimmonConsole_packages_folder, fp ]
         else:
             cmd = [ 'mono', persimmonConsole, fp ]
+
         process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
         out, err = process.communicate()
         process.kill()
