@@ -38,7 +38,6 @@ class quickrunfsHeader(object):
     @ neovim.function('PyPersimmon', sync = False)
     def persimon(self,arg):
 
-
         start = time.time()
 
         lst = list(filter(lambda b:os.path.basename(b.name) == 'quickrunfs-output', self.vim.buffers ))
@@ -56,33 +55,34 @@ class quickrunfsHeader(object):
 
         self.vim.command("wincmd p")
 
-
-        ### -----------------------------
-
+        # create dll file
         command  = ['fsharpc', '-a', self.filePath]
         p = subprocess.Popen( command, stdout=subprocess.PIPE, universal_newlines=True )
         out, err = p.communicate()
         p.kill()
 
+        # mono Persimmon.Console.exe
         persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/bin_deopletefs/tools/Persimmon.Console.exe') )
         fp = os.path.splitext(self.filePath)[0] + ".dll"
         cmd = [ 'mono', persimmonConsole, fp ]
         process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
         out, err = process.communicate()
         process.kill()
-        os.remove(fp)
 
-        ### -----------------------------
+        try:
+            os.remove(fp)
 
+            line_number = 0
+            for line in out.split('\n'):
+                buf_quickrunfs.append( line.strip(), line_number )
+                line_number = line_number + 1
 
-        line_number = 0
-        for line in out.split('\n'):
-            buf_quickrunfs.append( line.strip(), line_number )
-            line_number = line_number + 1
+            elapsed_time = time.time() - start
+            buf_quickrunfs.append( ("*** time : {0}".format(round(elapsed_time,6))) + " s ***" )
 
-        elapsed_time = time.time() - start
-        buf_quickrunfs.append( ("*** time : {0}".format(round(elapsed_time,6))) + " s ***" )
-        
+        except Exception as e:
+            self.fsiShow(arg)
+
 
     @ neovim.function('PyQuickRunFs', sync = False)
     def fsiShow(self,arg):
