@@ -62,9 +62,13 @@ class quickrunfsHeader(object):
         p.kill()
 
         # mono Persimmon.Console.exe
-        persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/bin_deopletefs/tools/Persimmon.Console.exe') )
+        persimmonConsole_local = self.expand(os.path.dirname( self.filePath ) + "/packages/Persimmon.Console/tools/Persimmon.Console.exe") 
+        persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/tools/Persimmon.Console.exe') )
         fp = os.path.splitext(self.filePath)[0] + ".dll"
-        cmd = [ 'mono', persimmonConsole, fp ]
+        if os.path.isfile(persimmonConsole_local) :
+            cmd = [ 'mono', persimmonConsole_local, fp ]
+        else:
+            cmd = [ 'mono', persimmonConsole, fp ]
         process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
         out, err = process.communicate()
         process.kill()
