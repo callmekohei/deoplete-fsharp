@@ -36,7 +36,7 @@ class quickrunfsHeader(object):
 
 
     @ neovim.function('PyPersimmon', sync = False)
-    def persimon(self,arg):
+    def persimmon(self,arg):
 
         start = time.time()
 
