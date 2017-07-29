@@ -9,13 +9,17 @@ using [deopletefs](https://github.com/callmekohei/deopletefs), [quickrunfs](http
 
 ## Like this
 
-auto-completion
+Auto-completion
 
 ![alt text](./pic/deopletefs.png)
 
-run
+Run
 
 ![alt text](./pic/quickrunfs.png)
+
+Test ( requires [Persimmon.Script](https://preview.nuget.org/packages?q=persimmon.Script) )
+
+![alt text](./pic/test.png)
 
 ## Installing
 
@@ -37,3 +41,36 @@ let g:deoplete#enable_at_startup = 1
 : w
 : QUICKRUNfs
 ```
+
+## How to test
+
+nuget `Persimmon.Script`
+```
+nuget Persimmon.Script
+```
+code following
+```fsharp
+/// require Persimmon libraries and open modules.
+#r "./packages/Persimmon/lib/net45/Persimmon.dll"
+#r "./packages/Persimmon.Runner/lib/net40/Persimmon.Runner.dll"
+#r "./packages/Persimmon.Script/lib/net45/Persimmon.Script.dll"
+open Persimmon
+open UseTestNameByReflection
+open System.Reflection
+
+/// write your test code here.
+let myTest = test {
+    do! assertEquals 1 2
+}
+
+/// print out test report.
+Script.testReport( fun _ -> Assembly.GetExecutingAssembly() )
+|> stdout.WriteLine
+```
+do test
+```
+: w
+: QUICKRUNfs
+```
+
+
