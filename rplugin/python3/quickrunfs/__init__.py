@@ -35,67 +35,6 @@ class quickrunfsHeader(object):
         return os.path.expandvars(os.path.expanduser(path))
 
 
-    @ neovim.function('PyPersimmon', sync = False)
-    def persimmon(self,arg):
-
-        start = time.time()
-
-        lst = list(filter(lambda b:os.path.basename(b.name) == 'quickrunfs-output', self.vim.buffers ))
-
-        if len(lst) != 0:
-            self.vim.command("bw!{quickrunfs-output}")
-
-        self.vim.command("vsplit quickrunfs-output")
-        self.vim.command("setlocal buftype=nofile")
-        self.vim.command("setlocal bufhidden=hide")
-        self.vim.command("setlocal noswapfile")
-        self.vim.command("setlocal nobuflisted")
-
-        buf_quickrunfs = self.vim.current.buffer
-
-        self.vim.command("wincmd p")
-
-        # create dll file
-        command  = ['fsharpc', '-a', self.filePath]
-        p = subprocess.Popen( command, stdout=subprocess.PIPE, universal_newlines=True )
-        out, err = p.communicate()
-        p.kill()
-
-        # mono Persimmon.Console.exe
-        persimmonConsole_same_folder     = self.expand(os.path.dirname( self.filePath ) + "/Persimmon.Console.exe")
-        persimmonConsole_tools_folder    = self.expand(os.path.dirname( self.filePath ) + "//tools/Persimmon.Console.exe")
-        persimmonConsole_packages_folder = self.expand(os.path.dirname( self.filePath ) + "/packages/Persimmon.Console/tools/Persimmon.Console.exe")
-        persimmonConsole = self.expand( re.split('rplugin', __file__)[0] + self.expand('ftplugin/tools/Persimmon.Console.exe') )
-        fp = os.path.splitext(self.filePath)[0] + ".dll"
-
-        if os.path.isfile(persimmonConsole_same_folder) :
-            cmd = [ 'mono', persimmonConsole_same_folder, fp ]
-        elif os.path.isfile(persimmonConsole_tools_folder) :
-            cmd = [ 'mono', persimmonConsole_tools_folder, fp ]
-        elif os.path.isfile(persimmonConsole_packages_folder) :
-            cmd = [ 'mono', persimmonConsole_packages_folder, fp ]
-        else:
-            cmd = [ 'mono', persimmonConsole, fp ]
-
-        process = subprocess.Popen( cmd , stdout=subprocess.PIPE, universal_newlines=True)
-        out, err = process.communicate()
-        process.kill()
-
-        try:
-            os.remove(fp)
-
-            line_number = 0
-            for line in out.split('\n'):
-                buf_quickrunfs.append( line.strip(), line_number )
-                line_number = line_number + 1
-
-            elapsed_time = time.time() - start
-            buf_quickrunfs.append( ("*** time : {0}".format(round(elapsed_time,6))) + " s ***" )
-
-        except Exception as e:
-            self.fsiShow(arg)
-
-
     @ neovim.function('PyQuickRunFs', sync = False)
     def fsiShow(self,arg):
 
