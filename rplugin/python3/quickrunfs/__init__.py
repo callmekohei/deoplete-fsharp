@@ -36,6 +36,10 @@ class quickrunfsHeader(object):
         return os.path.expandvars(os.path.expanduser(path))
 
 
+    def tail(self, n, iterable):
+        return iter(collections.deque(iterable, maxlen=n))
+
+
     @ neovim.function('PyQuickRunFs', sync = False)
     def fsiShow(self,arg):
 
@@ -95,6 +99,7 @@ class Util(threading.Thread):
         self.timeOut_s = timeOut_s
         self.event     = threading.Event()
         self.lines     = queue.Queue()
+        self.namespace = []
 
 
     def run(self):
