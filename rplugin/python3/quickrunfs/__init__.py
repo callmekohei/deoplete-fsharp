@@ -5,6 +5,7 @@
 # ===========================================================================
 
 import atexit
+import collections
 import neovim
 import os
 import queue
@@ -61,6 +62,21 @@ class quickrunfsHeader(object):
             lines = (self.util.read())[1:]
         else:
             lines = self.util.read()
+
+
+        ### for Persimmon.Script
+        try:
+            n = max([ i for i, word in enumerate(lines) if word.startswith('begin') ])
+            tpl = self.util.isViolatedMassages ( lines[n] )
+            if tpl[0] :
+                n = len(lines) - min([ i for i, word in enumerate(lines) if word.startswith(tpl[1]) ])
+                lines = self.tail(n, lines)
+            else:
+                n = len(lines) - max([ i for i, word in enumerate(lines) if word.startswith('end') ]) - 1
+                lines = self.tail(n, lines)
+        except :
+            pass
+
 
         line_number = 0
         for line in lines:
@@ -120,3 +136,13 @@ class Util(threading.Thread):
 
         return list
 
+
+    def isViolatedMassages(self,s) :
+        if not self.namespace :
+            self.namespace.append(s)
+            return (True, "")
+        elif self.namespace[-1] != s:
+            self.namespace.append(s)
+            return (True, self.namespace[-1])
+        else:
+            return (False, self.namespace[-1])
