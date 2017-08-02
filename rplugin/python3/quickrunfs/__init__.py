@@ -13,6 +13,7 @@ import re
 import subprocess
 import threading
 import time
+from deoplete.util import debug # <--- point!!!
 
 
 @ neovim.plugin
@@ -36,8 +37,13 @@ class quickrunfsHeader(object):
         return os.path.expandvars(os.path.expanduser(path))
 
 
-    def tail(self, n, iterable):
-        return iter(collections.deque(iterable, maxlen=n))
+    def tail3(self, n, iterable):
+        d = collections.deque(iterable, maxlen=n)
+
+        for i in range(3):
+            d.pop()
+
+        return iter(d)
 
 
     @ neovim.function('PyQuickRunFs', sync = False)
@@ -69,17 +75,18 @@ class quickrunfsHeader(object):
 
 
         ### for Persimmon.Script
-        try:
-            n = max([ i for i, word in enumerate(lines) if word.startswith('begin') ])
-            tpl = self.util.isViolatedMassages ( lines[n] )
-            if tpl[0] :
-                n = len(lines) - min([ i for i, word in enumerate(lines) if word.startswith(tpl[1]) ])
-                lines = self.tail(n, lines)
-            else:
-                n = len(lines) - max([ i for i, word in enumerate(lines) if word.startswith('end') ]) - 1
-                lines = self.tail(n, lines)
-        except :
-            pass
+        s = "============================== summary ==============================="
+        if s in lines:
+            try:
+                n = max([ i for i, word in enumerate(lines) if word.startswith('begin') ])
+                tpl = self.util.isViolatedMassages ( lines[n] )
+                if tpl[0] :
+                    n = len(lines) - min([ i for i, word in enumerate(lines) if word.startswith(tpl[1]) ])
+                    lines = self.tail3(n, lines)
+                else:
+                    lines = ["Pass"]
+            except :
+                lines = ["Pass"]
 
 
         line_number = 0
@@ -137,7 +144,7 @@ class Util(threading.Thread):
             if self.lines.empty():
                 break
             else:
-                list.append( self.lines.get_nowait() )
+                list.append( (self.lines.get_nowait()).strip() )
 
         return list
 
