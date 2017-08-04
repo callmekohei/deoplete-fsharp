@@ -11,7 +11,7 @@ using [deopletefs](https://github.com/callmekohei/deopletefs), [quickrunfs](http
 
 Auto-completion
 
-![alt text](./pic/deopletefs.png)
+![alt text](./pic/deoplete2.png)
 
 Run
 
@@ -19,7 +19,7 @@ Run
 
 Test ( requires [Persimmon.Script](https://preview.nuget.org/packages?q=persimmon.Script) )
 
-![alt text](./pic/test.png)
+![alt text](./pic/test2.png)
 
 ## Installing
 
