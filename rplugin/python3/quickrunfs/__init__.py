@@ -36,14 +36,8 @@ class quickrunfsHeader(object):
     def expand(self,path):
         return os.path.expandvars(os.path.expanduser(path))
 
-
-    def tail3(self, n, iterable):
-        d = collections.deque(iterable, maxlen=n)
-
-        for i in range(3):
-            d.pop()
-
-        return iter(d)
+    def tail(self, n, iterable):
+        return list(collections.deque(iterable, maxlen=n))
 
 
     @ neovim.function('PyQuickRunFs', sync = False)
@@ -78,15 +72,36 @@ class quickrunfsHeader(object):
         s = "============================== summary ==============================="
         if s in lines:
             try:
-                n = max([ i for i, word in enumerate(lines) if word.startswith('begin') ])
-                tpl = self.util.isViolatedMassages ( lines[n] )
+                l = min([ i for i, word in enumerate(lines) if word.startswith('begin') ])
+                m = max([ i for i, word in enumerate(lines) if word.startswith('end') ])
+
+                head_lines = []
+                if l > 0:
+                    head_lines = lines[0:l]
+                testReport_lines = lines[l:m+1]
+                tail_lines = lines[m+3:]
+
+                n = max([ i for i, word in enumerate(testReport_lines) if word.startswith('begin') ])
+                tpl = self.util.isViolatedMassages ( testReport_lines[n] )
+
                 if tpl[0] :
-                    n = len(lines) - min([ i for i, word in enumerate(lines) if word.startswith(tpl[1]) ])
-                    lines = self.tail3(n, lines)
+                    n = len(testReport_lines) - min([ i for i, word in enumerate(testReport_lines) if word.startswith(tpl[1]) ])
+                    testReport_lines = self.tail(n, testReport_lines)
+                    debug(self.vim,str(testReport_lines))
+
+                    lines = head_lines + testReport_lines + tail_lines
                 else:
-                    lines = ["Pass"]
-            except :
-                lines = ["Pass"]
+                    lines = head_lines + ["PASS"] + tail_lines
+            except:
+                s = "============================== summary ==============================="
+                l = min([ i for i, word in enumerate(lines) if word.startswith(s) ])
+
+                head_lines = []
+                if l > 0:
+                    head_lines = lines[0:l]
+                tail_lines = lines[l+2:]            
+
+                lines = head_lines + ["PASS"] + tail_lines
 
 
         line_number = 0
