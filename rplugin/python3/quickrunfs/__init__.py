@@ -13,7 +13,7 @@ import re
 import subprocess
 import threading
 import time
-from deoplete.util import debug # <--- point!!!
+from deoplete.util import debug
 
 
 @ neovim.plugin
@@ -87,8 +87,6 @@ class quickrunfsHeader(object):
                 if tpl[0] :
                     n = len(testReport_lines) - min([ i for i, word in enumerate(testReport_lines) if word.startswith(tpl[1]) ])
                     testReport_lines = self.tail(n, testReport_lines)
-                    debug(self.vim,str(testReport_lines))
-
                     lines = head_lines + testReport_lines + tail_lines
                 else:
                     lines = head_lines + ["PASS"] + tail_lines
@@ -100,7 +98,6 @@ class quickrunfsHeader(object):
                 if l > 0:
                     head_lines = lines[0:l]
                 tail_lines = lines[l+2:]            
-
                 lines = head_lines + ["PASS"] + tail_lines
 
 
