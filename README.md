@@ -42,7 +42,7 @@ let g:deoplete#enable_at_startup = 1
 : QUICKRUNfs
 ```
 
-## How to test
+## How to test (Future)
 
 nuget `Persimmon.Script`
 ```
