@@ -5,7 +5,6 @@
 # ===========================================================================
 
 import atexit
-import collections
 import neovim
 import os
 import queue
@@ -36,9 +35,6 @@ class quickrunfsHeader(object):
     def expand(self,path):
         return os.path.expandvars(os.path.expanduser(path))
 
-    def tail(self, n, iterable):
-        return list(collections.deque(iterable, maxlen=n))
-
 
     @ neovim.function('PyQuickRunFs', sync = False)
     def fsiShow(self,arg):
@@ -67,40 +63,6 @@ class quickrunfsHeader(object):
         else:
             lines = self.util.read()
 
-
-        ### for Persimmon.Script
-        s = "============================== summary ==============================="
-        if s in lines:
-            try:
-                l = min([ i for i, word in enumerate(lines) if word.startswith('begin') ])
-                m = max([ i for i, word in enumerate(lines) if word.startswith('end') ])
-
-                head_lines = []
-                if l > 0:
-                    head_lines = lines[0:l]
-                testReport_lines = lines[l:m+1]
-                tail_lines = lines[m+3:]
-
-                n = max([ i for i, word in enumerate(testReport_lines) if word.startswith('begin') ])
-                tpl = self.util.isViolatedMassages ( testReport_lines[n] )
-
-                if tpl[0] :
-                    n = len(testReport_lines) - min([ i for i, word in enumerate(testReport_lines) if word.startswith(tpl[1]) ])
-                    testReport_lines = self.tail(n, testReport_lines)
-                    lines = head_lines + testReport_lines + tail_lines
-                else:
-                    lines = head_lines + ["PASS"] + tail_lines
-            except:
-                s = "============================== summary ==============================="
-                l = min([ i for i, word in enumerate(lines) if word.startswith(s) ])
-
-                head_lines = []
-                if l > 0:
-                    head_lines = lines[0:l]
-                tail_lines = lines[l+2:]            
-                lines = head_lines + ["PASS"] + tail_lines
-
-
         line_number = 0
         for line in lines:
             buf_quickrunfs.append( line.strip(), line_number )
@@ -118,7 +80,6 @@ class Util(threading.Thread):
         self.timeOut_s = timeOut_s
         self.event     = threading.Event()
         self.lines     = queue.Queue()
-        self.namespace = []
 
 
     def run(self):
@@ -159,14 +120,3 @@ class Util(threading.Thread):
                 list.append( (self.lines.get_nowait()).strip() )
 
         return list
-
-
-    def isViolatedMassages(self,s) :
-        if not self.namespace :
-            self.namespace.append(s)
-            return (True, "")
-        elif self.namespace[-1] != s:
-            self.namespace.append(s)
-            return (True, self.namespace[-1])
-        else:
-            return (False, self.namespace[-1])
