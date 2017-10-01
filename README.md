@@ -84,6 +84,8 @@ Please use `QuickRun` instead of `QUICKRUNfs`.
 
 Because `QUICKRUNfs` can not work well for `async code`.
 
+[See also](https://github.com/fsharp/FSharp.Compiler.Service/blob/master/src/fsharp/fsi/fsi.fs#L2723-2723)
+
 ( require plugins )
 ```
 thinca/vim-quickrun
