@@ -65,7 +65,7 @@ class quickrunfsHeader(object):
 
         line_number = 0
         for line in lines:
-            buf_quickrunfs.append( line.strip(), line_number )
+            buf_quickrunfs.append( line , line_number )
             line_number = line_number + 1
 
         elapsed_time = time.time() - start
@@ -117,6 +117,6 @@ class Util(threading.Thread):
             if self.lines.empty():
                 break
             else:
-                list.append( (self.lines.get_nowait()).strip() )
+                list.append( (self.lines.get_nowait()).rstrip() )
 
         return list
