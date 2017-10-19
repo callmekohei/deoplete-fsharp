@@ -3,8 +3,8 @@ augroup deoplete-fsharp
     set previewheight=5
 
     autocmd!
-    autocmd  BufNewFile,BufRead            *.fsx  call LaunchFSI()
-    autocmd  BufNewFile,BufRead            *.fsx  command! -buffer QUICKRUNfs :call PyQuickRunFs()
+    " autocmd  BufNewFile,BufRead            *.fsx  call LaunchFSI()
+    " autocmd  BufNewFile,BufRead            *.fsx  command! -buffer QUICKRUNfs :call PyQuickRunFs()
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:create_temporary_file()
     autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
