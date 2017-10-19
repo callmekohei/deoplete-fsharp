@@ -29,38 +29,7 @@ call dein#add('callmekohei/deoplete-fsharp', {'build': 'bash install.bash'})
 let g:deoplete#enable_at_startup = 1
 ```
 
-## How to Test
 
-nuget `Persimmon.Script`
-```
-nuget Persimmon.Script
-```
-code following
-```fsharp
-/// require Persimmon libraries and open modules.
-#r "./packages/Persimmon/lib/net45/Persimmon.dll"
-#r "./packages/Persimmon.Runner/lib/net40/Persimmon.Runner.dll"
-#r "./packages/Persimmon.Script/lib/net45/Persimmon.Script.dll"
-
-open Persimmon
-open UseTestNameByReflection
-open System.Reflection
-
-/// write your test code here.
-let ``a unit test`` = test {
-  do! assertEquals 1 2
-}
-
-/// print out test report.
-new Persimmon.ScriptContext()
-|> FSI.collectAndRun( fun _ -> Assembly.GetExecutingAssembly() )
-
-```
-do test
-```
-: w
-: QUICKRUNfs
-```
 
 ## How to Run
 
@@ -106,4 +75,36 @@ hook_add = '''
 ```
 : w
 : QuickRun
+```
+## How to Test
+
+nuget `Persimmon.Script`
+```
+nuget Persimmon.Script
+```
+code following
+```fsharp
+/// require Persimmon libraries and open modules.
+#r "./packages/Persimmon/lib/net45/Persimmon.dll"
+#r "./packages/Persimmon.Runner/lib/net40/Persimmon.Runner.dll"
+#r "./packages/Persimmon.Script/lib/net45/Persimmon.Script.dll"
+
+open Persimmon
+open UseTestNameByReflection
+open System.Reflection
+
+/// write your test code here.
+let ``a unit test`` = test {
+  do! assertEquals 1 2
+}
+
+/// print out test report.
+new Persimmon.ScriptContext()
+|> FSI.collectAndRun( fun _ -> Assembly.GetExecutingAssembly() )
+
+```
+do test
+```
+: w
+: QUICKRUNfs
 ```
