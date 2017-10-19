@@ -106,5 +106,5 @@ new Persimmon.ScriptContext()
 do test
 ```
 : w
-: QUICKRUNfs
+: QuickRun
 ```
