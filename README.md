@@ -6,23 +6,13 @@
 
 # deoplete-fsharp
 
-F# support for Neovim
+F# support for Vim8 / Neovim
 
-using [deopletefs](https://github.com/callmekohei/deopletefs), [quickrunfs](https://github.com/callmekohei/quickrunfs)
+using [deopletefs](https://github.com/callmekohei/deopletefs)
 
-## Like this
-
-Auto-completion
+## Auto-completion
 
 ![alt text](./pic/deoplete2.png)
-
-Run ( QUICKRUNfs )
-
-![alt text](./pic/quickrunfs.png)
-
-Test ( requires [Persimmon.Script](https://preview.nuget.org/packages?q=persimmon.Script) )
-
-![alt text](./pic/persimmon.png)
 
 ## Installing
 
@@ -39,13 +29,7 @@ call dein#add('callmekohei/deoplete-fsharp', {'build': 'bash install.bash'})
 let g:deoplete#enable_at_startup = 1
 ```
 
-## How to run ( QUICKRUNfs )
-```
-: w
-: QUICKRUNfs
-```
-
-## How to test
+## How to Test
 
 nuget `Persimmon.Script`
 ```
@@ -78,13 +62,7 @@ do test
 : QUICKRUNfs
 ```
 
-## About vim-quickrun
-
-Please use `QuickRun` instead of `QUICKRUNfs`.
-
-Because `QUICKRUNfs` can not work well for `async code`.
-
-[See also](https://github.com/fsharp/FSharp.Compiler.Service/blob/master/src/fsharp/fsi/fsi.fs#L2723-2723)
+## How to Run
 
 ( require plugins )
 ```
@@ -124,7 +102,7 @@ hook_add = '''
     \     }
     \ }
 ```
-## How to run ( QuickRun )
+( How to run ( QuickRun ) )
 ```
 : w
 : QuickRun
