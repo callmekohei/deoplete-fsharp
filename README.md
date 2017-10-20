@@ -40,7 +40,7 @@ let g:deoplete#enable_at_startup = 1
 ## How to Run
 
 
-![alt text](./pic/quickrun.png)
+![alt text](./pic/quickrun2.png)
 
 
 ( require plugins )
@@ -92,7 +92,7 @@ hook_add = '''
 
 ## How to Test
 
-![alt text](./pic/persimmon.png)
+![alt text](./pic/persimmon2.png)
 
 nuget `Persimmon.Script`
 ```
