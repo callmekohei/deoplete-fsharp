@@ -29,9 +29,19 @@ call dein#add('callmekohei/deoplete-fsharp', {'build': 'bash install.bash'})
 let g:deoplete#enable_at_startup = 1
 ```
 
-
+<br>
+<br>
+<br>
+---
+<br>
+<br>
+<br>
 
 ## How to Run
+
+
+![alt text](./pic/quickrun.png)
+
 
 ( require plugins )
 ```
@@ -76,7 +86,13 @@ hook_add = '''
 : w
 : QuickRun
 ```
+
+<br>
+<br>
+
 ## How to Test
+
+![alt text](./pic/persimmon.png)
 
 nuget `Persimmon.Script`
 ```
