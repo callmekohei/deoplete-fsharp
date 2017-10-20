@@ -6,7 +6,7 @@
 
 # deoplete-fsharp
 
-F# support for Vim8 / Neovim
+F# support for Vim / Neovim
 
 using [deopletefs](https://github.com/callmekohei/deopletefs)
 
