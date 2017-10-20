@@ -10,6 +10,10 @@ F# support for Vim8 / Neovim
 
 using [deopletefs](https://github.com/callmekohei/deopletefs)
 
+<br>
+<br>
+
+
 ## Auto-completion
 
 ![alt text](./pic/deoplete2.png)
@@ -29,11 +33,6 @@ call dein#add('callmekohei/deoplete-fsharp', {'build': 'bash install.bash'})
 let g:deoplete#enable_at_startup = 1
 ```
 
-<br>
-<br>
-<br>
----
-<br>
 <br>
 <br>
 
