@@ -90,7 +90,7 @@ hook_add = '''
     \           'command'                         : 'fsharpi --readline-'
     \         , 'tempfile'                        : '%{tempname()}.fsx'
     \         , 'runner'                          : 'concurrent_process'
-    \         , 'runner/concurrent_process/load'  : '#load "%S";;'
+    \         , 'runner/concurrent_process/load'  : '#load "%S:gs?\\?/?";;'
     \         , 'runner/concurrent_process/prompt': '> '
     \     }
     \ }
