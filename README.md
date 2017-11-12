@@ -23,9 +23,24 @@ using [deopletefs](https://github.com/callmekohei/deopletefs)
 deoplete-fsharp requires mono and FSharp installed.
 
 installing with dein.vim
+
+init.vim
 ```vim
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('callmekohei/deoplete-fsharp', {'build': 'bash install.bash'})
+```
+dein.toml
+```toml 
+[[plugins]]
+repo = 'callmekohei/deoplete-fsharp'
+hook_post_update = '''
+    if dein#util#_is_windows()
+      let cmd = 'install.cmd'
+    else
+      let cmd = 'bash install.bash'
+    endif
+    let g:dein#plugin.build = cmd
+'''
+
 ```
 
 ## Configuration
