@@ -103,6 +103,13 @@ hook_add = '''
     \ }
 '''
 ```
+
+like this if you use window's Neovim.
+```
+'command': 'mono "C:\Program Files\Mono\lib\mono\fsharp\fsi.exe" --readline-'
+```
+
+
 ( How to run ( QuickRun ) )
 ```
 : w
