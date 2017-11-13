@@ -29,7 +29,7 @@ init.vim
 call dein#add('Shougo/deoplete.nvim')
 ```
 dein.toml
-```toml 
+```toml
 [[plugins]]
 repo = 'callmekohei/deoplete-fsharp'
 hook_post_update = '''
@@ -40,7 +40,14 @@ hook_post_update = '''
     endif
     let g:dein#plugin.build = cmd
 '''
+```
+add if you use vim8
+```toml
+[[plugins]]
+repo = 'roxma/nvim-yarp'
 
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
 ```
 
 ## Configuration
