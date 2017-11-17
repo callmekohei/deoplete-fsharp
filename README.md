@@ -4,6 +4,8 @@
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/fsugjp/public)
 
 
+![alt text](./pic/sample.gif)
+
 # deoplete-fsharp
 
 F# support for Vim / Neovim
