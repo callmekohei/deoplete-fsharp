@@ -3,8 +3,6 @@ augroup deoplete-fsharp
     set previewheight=5
 
     autocmd!
-    " autocmd  BufNewFile,BufRead            *.fsx  call LaunchFSI()
-    " autocmd  BufNewFile,BufRead            *.fsx  command! -buffer QUICKRUNfs :call PyQuickRunFs()
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
     autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
@@ -27,8 +25,7 @@ function! s:cleanup_temporary_file() abort
 endfunction
 
 function! s:write_temporary_file() abort
-    let l = ['///callmekohei'] + getline(1,'$')
-    call writefile( l , s:get_temporary_fileName() )
+    call writefile( getline(1,'$') , s:get_temporary_fileName() )
 endfunction
 
 function! s:update_completeDone() abort

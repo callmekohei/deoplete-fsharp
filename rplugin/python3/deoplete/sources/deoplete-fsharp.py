@@ -47,7 +47,7 @@ class Source(Base):
             , "Col"      : -9999 # dummy col
             , "Line"     : ''    # dummy line
             , "FilePath" : self.filePath
-            , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
+            , "Source"   : '\n'.join( getlines( self.vim ) )
             , "Init"     : 'dummy_init'
         }
         
@@ -67,12 +67,13 @@ class Source(Base):
             elapsed_time = time.time() - start
             self.vim.command("echo 'finish initialize! ( time : " + str(round(elapsed_time,6)) + " s )'")
 
+
             post_data = {
-                  "Row"      : 1
+                  "Row"      : -9999 # dummy row
                 , "Col"      : 1
                 , "Line"     : ''
                 , "FilePath" : self.filePath
-                , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
+                , "Source"   : '\n'.join( getlines( self.vim ) )
                 , "Init"     : 'real_init'
             }
 
@@ -94,11 +95,11 @@ class Source(Base):
         try:
 
             post_data = {
-                  "Row"      : context['position'][1] + 1  # To plus 1 is dummy line.
-                , "Col"      : context['complete_position'] 
+                  "Row"      : context['position'][1]
+                , "Col"      : context['complete_position'] - 1
                 , "Line"     : context['input']
                 , "FilePath" : self.filePath
-                , "Source"   : '// dummy line\n' + '\n'.join( getlines( self.vim ) )
+                , "Source"   : '\n'.join( getlines( self.vim ) )
                 , "Init"     : 'false'
             }
 
