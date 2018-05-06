@@ -22,6 +22,7 @@ from deoplete.source.base import Base
 from deoplete.util import getlines, expand
 from deoplete.util import debug
 
+
 class Source(Base):
 
     def __init__(self, vim):
@@ -30,18 +31,23 @@ class Source(Base):
         self.mark      = '[deopletefs]'
         self.filetypes = ['fsharp']
 
-        # input pattern
-        dotHints           = [ r"(\(|<|[a-zA-Z]|\"|\[)*(?<=(\)|>|[a-zA-Z0-9]|\"|\]))\." ]
-        oneWordHints       = [ r"^[a-zA-Z]$", "\s*[a-zA-Z]$", "typeof\<[a-zA-Z]$", "(\(\))[a-zA-Z]$", "(\<|\>)[a-zA-Z]$", "(\[|\])[a-zA-Z]$"  ]
-        attributeHints     = [ r"\[<[a-zA-Z]*" ]
-        self.input_pattern = '|'.join( dotHints + oneWordHints + attributeHints )
- 
+        # work around
+        if self.vim.eval("&filetype") in self.filetypes:
+            self.vim.command("call deoplete#send_event('InsertEnter')")
+
 
     def on_init(self, context):
 
         self.filePath = expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
         fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin_deopletefs/deopletefs.exe') )
 
+        # input pattern
+        dotHints           = [ r"(\(|<|[a-zA-Z]|\"|\[)*(?<=(\)|>|[a-zA-Z0-9]|\"|\]))\." ]
+        oneWordHints       = [ r"^[a-zA-Z]$", "\s*[a-zA-Z]$", "typeof\<[a-zA-Z]$", "(\(\))[a-zA-Z]$", "(\<|\>)[a-zA-Z]$", "(\[|\])[a-zA-Z]$"  ]
+        attributeHints     = [ r"\[<[a-zA-Z]*" ]
+        self.input_pattern = '|'.join( dotHints + oneWordHints + attributeHints )
+
+        # first initialize of deopletefs
         post_data = {
               "Row"      : -9999 # dummy row
             , "Col"      : -9999 # dummy col
@@ -50,40 +56,22 @@ class Source(Base):
             , "Source"   : '\n'.join( getlines( self.vim ) )
             , "Init"     : 'dummy_init'
         }
-        
+
         self.util = Util(fsc_path, 20, json.dumps(post_data))
-        self.util.start()
+        self.util.read()
 
+        # second initialize of deopletefs
+        post_data = {
+              "Row"      : -9999 # dummy row
+            , "Col"      : 1
+            , "Line"     : ''
+            , "FilePath" : self.filePath
+            , "Source"   : '\n'.join( getlines( self.vim ) )
+            , "Init"     : 'real_init'
+        }
 
-    def on_event(self, context):
-
-        if context['event'] == 'Init':
-
-            start = time.time()
-            self.vim.command("echo '*** deopletefs initializing... ***'")
-
-            self.util.read()
-
-            elapsed_time = time.time() - start
-            self.vim.command("echo 'finish initialize! ( time : " + str(round(elapsed_time,6)) + " s )'")
-
-
-            post_data = {
-                  "Row"      : -9999 # dummy row
-                , "Col"      : 1
-                , "Line"     : ''
-                , "FilePath" : self.filePath
-                , "Source"   : '\n'.join( getlines( self.vim ) )
-                , "Init"     : 'real_init'
-            }
-
-            self.util.send(json.dumps(post_data))
-
-
-        elif context['event'] == 'BufWritePost':
-            pass
-        else:
-            pass
+        self.util.send(json.dumps(post_data))
+        self.util.read()
 
 
     def get_complete_position(self, context):
@@ -104,35 +92,28 @@ class Source(Base):
             }
 
             self.util.send(json.dumps(post_data))
-            messages = self.util.read()
 
             return [
                 {
                       "word": json_data['word']
                     , "info": '\n'.join( functools.reduce ( lambda a , b : a + b , json_data['info'] ) )
                 }
-                for json_data in [ json.loads(s) for s in messages ]
+                for json_data in [ json.loads(s) for s in self.util.read() ]
             ]
 
         except Exception as e:
             return [ str(e) ]
 
 
-class Util(threading.Thread):
+class Util():
 
     def __init__(self, exe_path, timeOut_s, txt):
-        super(Util, self).__init__()
 
         self.exe_path  = exe_path
         self.txt       = txt
         self.timeOut_s = timeOut_s
-
         self.event     = threading.Event()
-
         self.lines     = queue.Queue()
-
-
-    def run(self):
 
         # launch deopletefs
         command      = [ 'mono', self.exe_path ]
