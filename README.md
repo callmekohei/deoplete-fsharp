@@ -61,7 +61,7 @@ call deoplete#custom#option({
 
 # More info. for F# script file
 
-## Run
+## 01. Run
 
 ![alt text](./pic/quickrun2.png)
 
@@ -119,7 +119,7 @@ If you use window's Vim / Neovim
 : QuickRun
 ```
 
-## Test
+## 02. Test
 
 ![alt text](./pic/persimmon2.png)
 
@@ -164,3 +164,96 @@ let ``a unit test`` = test {
 new Persimmon.ScriptContext()
 |> FSI.collectAndRun( fun _ -> Assembly.GetExecutingAssembly() )
 ```
+
+
+## 03. Debug
+
+![alt text](./pic/tigadebugger.gif)
+
+### Requires plugins  
+[tigaDebugger](https://github.com/callmekohei/tigaDebugger)  
+[sdbplg](https://github.com/callmekohei/sdbplg)
+
+
+### Install ( requires [sdb](https://github.com/mono/sdb) )
+`tigaDebugger` is available with only Vim8  ( with python3, with terminal ) .
+
+```shell
+// download vim plugins
+$ git clone --depth 1 https://github.com/callmekohei/sdbplg
+$ git clone --depth 1 https://github.com/callmekohei/tigaDebugger
+$ git clone --depth 1 https://github.com/roxma/nvim-yarp
+$ git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc
+
+// install neovim plugins
+$ pip3 install neovim
+
+// build sdbplg 
+$ cd ./sdbplg/
+$ bash build.bash
+
+// set runtimepath
+$ vim .vimrc
+    set runtimepath+=/path/to/tigaDebugger
+    set runtimepath+=/path/to/nvim-yarp
+    set runtimepath+=/path/to/vim-hug-neovim-rpc
+
+// set path
+$ vim $HOME/.bash_profile
+    export SDB_PATH=/PATH/TO/sdbplg/bin/
+```
+
+### Usage
+```shell
+// write fsharp code
+$ vim foo.fsx
+
+    let foo() =
+        let mutable x = 1
+        x <- 2
+        x <- 3
+        x
+
+    foo ()
+    |> stdout.WriteLine
+
+
+// compile file
+$ fsharpc -g --optimize- foo.fsx
+
+// open file
+$ vim foo.fsx
+
+// start debug mode
+: TigaSetDebugger sdb
+: Tiga foo.exe
+
+// set break point
+: TigaCommand bp add at foo.fsx 3
+
+// run
+: TigaCommand r
+
+// next
+: TigaCommand n
+
+// quit debug mode
+: TigaQuit
+```
+
+### tigaDebugger Shortcut Keys
+
+| Press         | To            |
+| :------------ | :-------------|
+| ctrl b        | Add or delete <b>B</span></b>reakpoint |
+| ctrl d        | <b>D</b>elete all breakpoints |
+| ctrl r        | <b>R</b>un |
+| ctrl k        | <b>K</b>ill (Break) |
+| ctrl p        | Re<b>p</b>lace watch variable |
+| ctrl y        | Add watch variable |
+| ctrl t        | Delete watch variable |
+| ctrl n        | Step over ( <b>N</b>ext ) |
+| ctrl i        | Step <b>i</b>n | 
+| ctrl u        | Step out ( <b>U</b>p ) | 
+| ctrl c        | <b>C</b>ontinue |
+
