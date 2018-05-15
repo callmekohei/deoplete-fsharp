@@ -16,12 +16,12 @@ deoplete-fsharp requires [mono](https://github.com/mono/mono) and [fsharp](https
 
 Vim
 ```
-// download vim plugins
+// download
 $ git clone --depth 1 https://github.com/callmekohei/deoplete-fsharp
 $ git clone --depth 1 https://github.com/roxma/nvim-yarp
 $ git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc
 
-// do install command
+// install
 $ cd ./deoplete-fsharp/
 $ bash install.bash ( or install.cmd )
 
@@ -34,10 +34,10 @@ $ vim .vimrc
 
 NeoVim
 ```
-// download vim plugins
+// download
 $ git clone --depth 1 https://github.com/callmekohei/deoplete-fsharp
 
-// do install command
+// install
 $ cd ./deoplete-fsharp/
 $ bash install.bash ( or install.cmd )
 
@@ -46,7 +46,7 @@ $ vim .vimrc
     set runtimepath+=/path/to/deoplete-fsharp
 ```
 
-Example of deoplete setting ( my setteing )
+Example of deoplete setting
 
 ```vim
 " .vimrc ( or init.vim )
@@ -71,11 +71,11 @@ call deoplete#custom#option({
 
 ### Install and build
 ```
-// download vim plugins
+// download
 $ git clone --depth 1 https://github.com/thinca/vim-quickrun
 $ git clone --depth 1 https://github.com/Shougo/vimproc.vim
 
-// build vimproc
+// build
 $ cd ./vimproc/
 $ make
 
@@ -85,7 +85,7 @@ $ vim .vimrc
     set runtimepath+=/path/to/vimproc.vim
 ```
 
-### Example of vim-quickrun setting ( my setteing )
+### Example of vim-quickrun setting
 ```vim
 " .vimrc ( or init.vim )
 let g:quickrun_config = {}
@@ -132,7 +132,7 @@ If you use window's Vim / Neovim
 $ mkdir foo/
 $ cd foo/
 
-// install Persimmon.Script
+// install
 $ paket init
 $ vim paket.dependencies
     source https://www.nuget.org/api/v2
@@ -170,17 +170,47 @@ new Persimmon.ScriptContext()
 
 ![alt text](./pic/tigadebugger.gif)
 
-### Requires plugins  
+
+### Requires
+[sdb](https://github.com/mono/sdb)  
+[sdbplg](https://github.com/callmekohei/sdbplg)  
 [tigaDebugger](https://github.com/callmekohei/tigaDebugger)  
-[sdbplg](https://github.com/callmekohei/sdbplg)
 
+`tigaDebugger` is available with only Vim8 ( +python3, +terminal ).
 
-### Install ( requires [sdb](https://github.com/mono/sdb) )
-`tigaDebugger` is available with only Vim8  ( with python3, with terminal ) .
+### Install
 
+sdb
 ```shell
-// download vim plugins
+// download
+$ git clone --depth 1 https://github.com/mono/sdb
+
+// clone the submodules
+$ cd ./sdb/
+$ git submodule update --init --recursive
+
+// build
+$ make
+$ make install
+```
+
+sdbplg
+```shell
+// download
 $ git clone --depth 1 https://github.com/callmekohei/sdbplg
+
+// build 
+$ cd ./sdbplg/
+$ bash build.bash
+
+// set path
+$ vim $HOME/.bash_profile
+    export SDB_PATH=/PATH/TO/sdbplg/bin/
+```
+
+tigaDebugger
+```shell
+// download
 $ git clone --depth 1 https://github.com/callmekohei/tigaDebugger
 $ git clone --depth 1 https://github.com/roxma/nvim-yarp
 $ git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc
@@ -188,19 +218,11 @@ $ git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc
 // install neovim plugins
 $ pip3 install neovim
 
-// build sdbplg 
-$ cd ./sdbplg/
-$ bash build.bash
-
 // set runtimepath
 $ vim .vimrc
     set runtimepath+=/path/to/tigaDebugger
     set runtimepath+=/path/to/nvim-yarp
     set runtimepath+=/path/to/vim-hug-neovim-rpc
-
-// set path
-$ vim $HOME/.bash_profile
-    export SDB_PATH=/PATH/TO/sdbplg/bin/
 ```
 
 ### Usage
@@ -253,7 +275,7 @@ $ vim foo.fsx
 | ctrl y        | Add watch variable |
 | ctrl t        | Delete watch variable |
 | ctrl n        | Step over ( <b>N</b>ext ) |
-| ctrl i        | Step <b>i</b>n | 
+| ctrl i        | Step <b>I</b>n |
 | ctrl u        | Step out ( <b>U</b>p ) | 
 | ctrl c        | <b>C</b>ontinue |
 
