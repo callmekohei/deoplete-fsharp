@@ -10,9 +10,11 @@
 Using [deopletefs](https://github.com/callmekohei/deopletefs) that is command-line interface to the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).  
 It's useful to write a small code in F# script file ( .fsx ) .
 
-## Install
+## Requires
+[mono](https://github.com/mono/mono)  
+[fsharp](https://github.com/fsharp/fsharp)
 
-deoplete-fsharp requires [mono](https://github.com/mono/mono) and [fsharp](https://github.com/fsharp/fsharp) installed.
+## Install
 
 Vim
 ```
@@ -65,7 +67,7 @@ call deoplete#custom#option({
 
 ![alt text](./pic/quickrun2.png)
 
-### Requires plugins  
+### Requires  
 [vim-quickrun](https://github.com/thinca/vim-quickrun)  
 [vimproc.vim](https://github.com/Shougo/vimproc.vim)
 
@@ -123,7 +125,7 @@ If you use window's Vim / Neovim
 
 ![alt text](./pic/persimmon2.png)
 
-### Requires plugins  
+### Requires  
 [Persimmon.Script](https://github.com/persimmon-projects/Persimmon.Script)
 
 ### Install ( requires [Paket](https://github.com/fsprojects/Paket) )
