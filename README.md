@@ -205,6 +205,9 @@ $ git clone --depth 1 https://github.com/callmekohei/sdbplg
 $ cd ./sdbplg/
 $ bash build.bash
 
+// put `.sdb.rc` file on `$HOME`
+    cp .sdb.rc $HOME/
+
 // set path
 $ vim $HOME/.bash_profile
     export SDB_PATH=/PATH/TO/sdbplg/bin/
