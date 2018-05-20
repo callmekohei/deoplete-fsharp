@@ -32,6 +32,7 @@ class Source(Base):
         self.mark      = '[fs]'
         self.filetypes = ['fsharp']
         self.standby   = False
+        self.rank      = 900
 
 
     def on_init(self, context):
