@@ -206,7 +206,7 @@ $ cd ./sdbplg/
 $ bash build.bash
 
 // put `.sdb.rc` file on `$HOME`
-    cp .sdb.rc $HOME/
+$ cp .sdb.rc $HOME/
 
 // set path
 $ vim $HOME/.bash_profile
