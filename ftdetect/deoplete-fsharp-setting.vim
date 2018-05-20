@@ -1,5 +1,4 @@
 augroup deoplete-fsharp
-    let g:deoplete#max_list = 1000
     set previewheight=5
 
     autocmd!
