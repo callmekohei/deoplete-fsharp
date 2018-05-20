@@ -28,8 +28,8 @@ class Source(Base):
 
     def __init__(self, vim):
         super().__init__(vim)
-        self.name      = 'deopletefs'
-        self.mark      = '[deopletefs]'
+        self.name      = 'fs'
+        self.mark      = '[fs]'
         self.filetypes = ['fsharp']
         self.standby   = False
 
