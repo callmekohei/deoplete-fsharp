@@ -31,14 +31,10 @@ class Source(Base):
         self.name      = 'fs'
         self.mark      = '[fs]'
         self.filetypes = ['fsharp']
-        self.standby   = False
         self.rank      = 900
 
 
     def on_init(self, context):
-
-        self.filePath = expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
-        fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin/deopletefs.exe') )
 
         ### input pattern
         dotHints           = [ r"(\(|<|[a-zA-Z]|\"|\[)*(?<=(\)|>|[a-zA-Z0-9]|\"|\]))\." ]
@@ -47,6 +43,10 @@ class Source(Base):
         self.input_pattern = '|'.join( dotHints + oneWordHints + attributeHints )
 
         ### initialize of deopletefs
+        self.standby  = False
+        self.filePath = expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
+        fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin/deopletefs.exe') )
+
         post_data = {
               "Row"      : -9999 # dummy row
             , "Col"      : 1
