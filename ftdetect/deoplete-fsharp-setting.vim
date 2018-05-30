@@ -34,3 +34,30 @@ function! s:update_completeDone() abort
         call s:write_temporary_file()
     endif
 endfunction
+
+" see also:
+" quick-run can not execute well at vim's launch. #175
+" https://github.com/thinca/vim-quickrun/issues/175
+if has('nvim')
+    if exists('g:quickrun_config.fsharpCheck')
+        augroup fsharp
+
+            let s:err     = '%f(%l\,%c):\ %m'
+            let s:blank01 = '%-G %.%#'
+            let s:blank02 = '%-G'
+            let s:invalid = '%-G%[%^/]%.%#'
+
+            let s:lst = [
+                \   s:err
+                \ , s:blank01
+                \ , s:blank02
+                \ , s:invalid
+                \ ]
+
+            autocmd!
+            autocmd FileType fsharp let &errorformat = join( s:lst , ',' )
+            autocmd BufWinEnter  *.fsx  execute ":QuickRun fsharpCheck"
+            autocmd BufWritePost *.fsx  execute ":QuickRun fsharpCheck"
+        augroup end
+    endif
+endif
