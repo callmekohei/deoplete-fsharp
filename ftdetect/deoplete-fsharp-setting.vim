@@ -40,7 +40,7 @@ endfunction
 " https://github.com/thinca/vim-quickrun/issues/175
 if has('nvim')
     if exists('g:quickrun_config.fsharpCheck')
-        augroup fsharp
+        augroup fsharpCheck
 
             let s:err     = '%f(%l\,%c):\ %m'
             let s:blank01 = '%-G %.%#'
