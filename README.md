@@ -52,6 +52,15 @@ Example of deoplete setting
 
 ```vim
 " .vimrc ( or init.vim )
+
+" launch deoplete when vim/neovim startup.
+let g:deoplete#enable_at_startup = 1
+
+" remove dupulicate candidates
+call deoplete#custom#source('_',
+\ 'converters', ['remove_overlap'])
+
+" speed up and ignore case
 call deoplete#custom#option({
 \ 'auto_complete_delay': 0,
 \ 'ignore_case': v:true,
@@ -104,7 +113,6 @@ let g:quickrun_config._ = {
 
 let g:quickrun_config.fsharp = {
     \  'command'                         : 'fsharpi --readline-'
-    \ ,'tempfile'                        : '%{tempname()}.fsx'
     \ ,'runner'                          : 'concurrent_process'
     \ ,'runner/concurrent_process/load'  : '#load "%S";;'
     \ ,'runner/concurrent_process/prompt': '> '
