@@ -145,8 +145,8 @@ $ cd foo/
 // install
 $ paket init
 $ vim paket.dependencies
-    source https://www.nuget.org/api/v2
     generate_load_scripts: true
+    source https://www.nuget.org/api/v2
     nuget persimmon.script
 $ paket install
 ```
