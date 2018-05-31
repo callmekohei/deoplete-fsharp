@@ -56,8 +56,8 @@ if has('nvim')
 
             autocmd!
             autocmd FileType fsharp let &errorformat = join( s:lst , ',' )
-            autocmd BufWinEnter  *.fsx  execute ":QuickRun fsharpCheck"
-            autocmd BufWritePost *.fsx  execute ":QuickRun fsharpCheck"
+            autocmd BufWinEnter  *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
+            autocmd BufWritePost *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
         augroup end
     endif
 endif
