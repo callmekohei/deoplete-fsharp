@@ -2,7 +2,9 @@ augroup deoplete-fsharp
     autocmd!
     " regexpengine=1 is for fast rendering of fsharp.vim syntax.
     " regexpengine must be before filetype setting.
-    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal regexpengine=1
+    if !has('nvim') && !has('gui_running')
+        autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set regexpengine=1
+    endif
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal previewheight=5
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
