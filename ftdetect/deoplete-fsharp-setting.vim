@@ -1,7 +1,10 @@
 augroup deoplete-fsharp
-    " regexpengine=1 is for fast rendering of fsharp.vim syntax
     autocmd!
-    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal filetype=fsharp | setlocal regexpengine=1 | setlocal previewheight=5
+    " regexpengine=1 is for fast rendering of fsharp.vim syntax.
+    " regexpengine must be before filetype setting.
+    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal regexpengine=1
+    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal filetype=fsharp
+    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal previewheight=5
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
     autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
     autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
