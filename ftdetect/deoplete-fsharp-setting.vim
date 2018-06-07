@@ -36,29 +36,31 @@ function! s:update_completeDone() abort
     endif
 endfunction
 
-" see also:
-" quick-run can not execute well at vim's launch. #175
-" https://github.com/thinca/vim-quickrun/issues/175
-if has('nvim')
-    if exists('g:quickrun_config.fsharpCheck')
-        augroup fsharpCheck
 
-            let s:err     = '%f(%l\,%c):\ %m'
-            let s:blank01 = '%-G %.%#'
-            let s:blank02 = '%-G'
-            let s:invalid = '%-G%[%^/]%.%#'
+if exists('g:quickrun_config.fsharpCheck')
+    augroup fsharpCheck
 
-            let s:lst = [
-                \   s:err
-                \ , s:blank01
-                \ , s:blank02
-                \ , s:invalid
-                \ ]
+        let s:err     = '%f(%l\,%c):\ %m'
+        let s:blank01 = '%-G %.%#'
+        let s:blank02 = '%-G'
+        let s:invalid = '%-G%[%^/]%.%#'
 
-            autocmd!
-            autocmd FileType fsharp let &errorformat = join( s:lst , ',' )
-            autocmd BufWinEnter  *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
-            autocmd BufWritePost *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
-        augroup end
-    endif
+        let s:lst = [
+            \   s:err
+            \ , s:blank01
+            \ , s:blank02
+            \ , s:invalid
+            \ ]
+
+        autocmd!
+        autocmd FileType fsharp let &errorformat = join( s:lst , ',' )
+
+        " see also:
+        " quick-run can not execute well at vim's launch. #175
+        " https://github.com/thinca/vim-quickrun/issues/175
+        if has('nvim') || has('gui_running')
+            autocmd BufWinEnter *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
+        endif
+        autocmd BufWritePost *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
+    augroup end
 endif
