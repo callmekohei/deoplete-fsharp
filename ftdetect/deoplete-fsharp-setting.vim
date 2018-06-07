@@ -1,6 +1,7 @@
 augroup deoplete-fsharp
     set previewheight=5
-
+    " for fast rendering of fsharp.vim syntax
+    set regexpengine=1
     autocmd!
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
