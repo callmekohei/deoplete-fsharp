@@ -18,7 +18,7 @@ augroup deoplete-fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
 
     " TODO: delete()
-    autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
+    autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call delete( s:get_temporary_fileName() )
 
     autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
     autocmd  InsertLeave        *.fs,*.fsi,*.fsx  call s:write_temporary_file()
@@ -28,14 +28,6 @@ augroup END
 
 function! s:get_temporary_fileName() abort
     return substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )
-endfunction
-
-function! s:cleanup_temporary_file() abort
-    if has('win32') || has('win32unix')
-        execute ":silent !del " . s:get_temporary_fileName()
-    else
-        execute ":silent !rm " . s:get_temporary_fileName()
-    endif
 endfunction
 
 function! s:write_temporary_file() abort
