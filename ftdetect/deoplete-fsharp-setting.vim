@@ -13,8 +13,13 @@ augroup deoplete-fsharp
 
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal filetype=fsharp
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal previewheight=5
+
+    " TODO: use tempname()
     autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
+
+    " TODO: delete()
     autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call s:cleanup_temporary_file()
+
     autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
     autocmd  InsertLeave        *.fs,*.fsi,*.fsx  call s:write_temporary_file()
     autocmd  InsertEnter        *.fs,*.fsi,*.fsx  call s:write_temporary_file()
