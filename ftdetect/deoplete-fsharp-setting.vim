@@ -27,7 +27,8 @@ augroup deoplete-fsharp
 augroup END
 
 function! s:get_temporary_fileName() abort
-    return substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )
+    let g:temporay_fsharp_file = tempname()
+    return g:temporay_fsharp_file
 endfunction
 
 function! s:write_temporary_file() abort

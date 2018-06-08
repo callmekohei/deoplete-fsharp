@@ -44,7 +44,7 @@ class Source(Base):
 
         ### initialize of deopletefs
         self.standby  = False
-        self.filePath = expand( self.vim.eval( "substitute( expand('%:p:r') . '_deoplete-fsharp_temporary_file.fsx' , '\#', '\\#' , 'g' )" ) )
+        self.filePath = self.vim.vars['temporay_fsharp_file']
         fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin/deopletefs.exe') )
 
         post_data = {
