@@ -19,6 +19,7 @@ It's useful to write a small code in F# script file ( .fsx ) .
 Vim
 ```
 // download
+$ git clone --depth 1 https://github.com/Shougo/deoplete.nvim
 $ git clone --depth 1 https://github.com/callmekohei/deoplete-fsharp
 $ git clone --depth 1 https://github.com/roxma/nvim-yarp
 $ git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc
@@ -29,6 +30,7 @@ $ bash install.bash ( or install.cmd )
 
 // set runtimepath
 $ vim .vimrc
+    set runtimepath+=/path/to/deoplete
     set runtimepath+=/path/to/deoplete-fsharp
     set runtimepath+=/path/to/nvim-yarp
     set runtimepath+=/path/to/vim-hug-neovim-rpc
@@ -37,6 +39,7 @@ $ vim .vimrc
 NeoVim
 ```
 // download
+$ git clone --depth 1 https://github.com/Shougo/deoplete.nvim
 $ git clone --depth 1 https://github.com/callmekohei/deoplete-fsharp
 
 // install
@@ -45,6 +48,7 @@ $ bash install.bash ( or install.cmd )
 
 // set runtimepath
 $ vim .vimrc
+    set runtimepath+=/path/to/deoplete
     set runtimepath+=/path/to/deoplete-fsharp
 ```
 
