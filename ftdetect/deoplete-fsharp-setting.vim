@@ -1,73 +1,17 @@
-augroup deoplete-fsharp
-    autocmd!
-
-    " ------------------------------------------------------------------------
-    " TODO: delete --> if  fix rendering on vim #103 is ok.
-    " https://github.com/fsharp/vim-fsharp/pull/103
-    " regexpengine=1 is for fast rendering of fsharp.vim syntax.
-    " regexpengine must be before filetype setting.
-    if !has('nvim') && !has('gui_running')
-        autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set regexpengine=1
-    endif
-    " ------------------------------------------------------------------------
-
-    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal filetype=fsharp
-    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  setlocal previewheight=5
-
-    " TODO: use tempname()
-    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  call s:write_temporary_file()
-
-    " TODO: delete()
-    autocmd  BufWinLeave        *.fs,*.fsi,*.fsx  call delete( s:get_temporary_fileName() )
-
-    autocmd  CompleteDone       *.fs,*.fsi,*.fsx  call s:update_completeDone()
-    autocmd  InsertLeave        *.fs,*.fsi,*.fsx  call s:write_temporary_file()
-    autocmd  InsertEnter        *.fs,*.fsi,*.fsx  call s:write_temporary_file()
-    autocmd  BufWrite           *.fs,*.fsi,*.fsx  call s:write_temporary_file()
+augroup au_fsharp
+  autocmd!
 augroup END
 
-function! s:get_temporary_fileName() abort
-    let g:temporay_fsharp_file = tempname()
-    return g:temporay_fsharp_file
-endfunction
+" ------------------------------------------------------------------------
+  " TODO: Delete this command if issue#103 ( fix rendering on vim ) pass.
+  " https://github.com/fsharp/vim-fsharp/pull/103
+  "
+  " regexpengine=1 is for fast rendering of fsharp.vim syntax.
+  " regexpengine must be before filetype setting.
+  if !has('nvim') && !has('gui_running')
+    autocmd  BufNewFile,BufRead *.fs,*.fsi,*.fsx  set regexpengine=1
+  endif
+" ------------------------------------------------------------------------
 
-function! s:write_temporary_file() abort
-    call writefile( getline(1,'$') , s:get_temporary_fileName() )
-endfunction
-
-function! s:update_completeDone() abort
-    let s = getline('.')
-    let n = match(s,'\v(\s*)open')
-    if n == 0
-        call s:write_temporary_file()
-    endif
-endfunction
-
-
-if exists('g:quickrun_config.fsharpCheck')
-    augroup fsharpCheck
-
-        let s:err     = '%f(%l\,%c):\ %m'
-        let s:blank01 = '%-G %.%#'
-        let s:blank02 = '%-G'
-        let s:invalid = '%-G%[%^/]%.%#'
-
-        let s:lst = [
-            \   s:err
-            \ , s:blank01
-            \ , s:blank02
-            \ , s:invalid
-            \ ]
-
-        autocmd!
-        autocmd FileType fsharp let &errorformat = join( s:lst , ',' )
-
-        " see also:
-        " quick-run can not execute well at vim's launch. #175
-        " https://github.com/thinca/vim-quickrun/issues/175
-        if has('nvim') || has('gui_running')
-            autocmd BufWinEnter *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
-        endif
-        autocmd BufWritePost *.fsx  call quickrun#run( g:quickrun_config.fsharpCheck )
-    augroup end
-endif
+autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal filetype=fsharp
+autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal previewheight=5
