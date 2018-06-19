@@ -14,4 +14,9 @@ augroup END
 " ------------------------------------------------------------------------
 
 autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal filetype=fsharp
-autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal previewheight=5
+
+"-------------------------
+" favorite settings
+"-------------------------
+autocmd au_fsharp FileType fsharp setlocal previewheight=5
+autocmd au_fsharp FileType fsharp set nosplitbelow
