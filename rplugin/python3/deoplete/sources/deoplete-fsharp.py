@@ -45,7 +45,7 @@ class Source(Base):
         ### initialize of deopletefs
         self.standby  = False
         self.filePath = expand( self.vim.eval( "substitute( expand('%:p') , '\#', '\\#' , 'g' )" ) )
-        fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('ftplugin/bin/deopletefs.exe') )
+        fsc_path      = expand( re.split('rplugin', __file__)[0] + expand('bin/deopletefs.exe') )
 
         post_data = {
               "Row"      : -9999 # dummy row
