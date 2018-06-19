@@ -1,4 +1,6 @@
-augroup au_fsharp
+scriptencoding utf-8
+
+augroup aufsharp
   autocmd!
 augroup END
 
@@ -13,4 +15,5 @@ augroup END
   endif
 " ------------------------------------------------------------------------
 
-autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal filetype=fsharp
+autocmd aufsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx setlocal filetype=fsharp
+
