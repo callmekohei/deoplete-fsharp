@@ -11,7 +11,7 @@ augroup END
   " regexpengine=1 is for fast rendering of fsharp.vim syntax.
   " regexpengine must be before filetype setting.
   if !has('nvim') && !has('gui_running')
-    autocmd au_fsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx  set regexpengine=1
+    autocmd aufsharp BufNewFile,BufRead *.fs,*.fsi,*.fsx  set regexpengine=1
   endif
 " ------------------------------------------------------------------------
 
