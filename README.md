@@ -62,12 +62,13 @@ let g:deoplete#enable_at_startup = 1
 
 " remove dupulicate candidates
 call deoplete#custom#source('_',
-\ 'converters', ['remove_overlap'])
+  \ 'converters', ['remove_overlap'])
 
-" speed up and ignore case
+" refresh_always must be v:false
 call deoplete#custom#option({
-\ 'auto_complete_delay': 0,
-\ 'ignore_case': v:true,
+  \ 'auto_complete_delay': 0,
+  \ 'ignore_case': v:true,
+  \ 'refresh_always': v:false,
 \ })
 ```
 
