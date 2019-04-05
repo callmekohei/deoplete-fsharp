@@ -11,7 +11,7 @@ Using [deopletefs](https://github.com/callmekohei/deopletefs) that is command-li
 It's useful to write a small code in F# script file ( .fsx ) .
 
 ## Requires
-[mono](https://github.com/mono/mono)  
+[mono](https://github.com/mono/mono)  ( >= Mono 5.4.0 )
 [fsharp](https://github.com/fsharp/fsharp)
 
 ## Install
