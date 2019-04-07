@@ -61,7 +61,7 @@ Example of deoplete setting
 " Please do not use deoplete#enable() function.
 let g:deoplete#enable_at_startup = 1
 
-autocmd MyAutoCmd VimEnter *.fsx *.fs call s:foo()
+autocmd MyAutoCmd VimEnter *.fsx,*.fs call s:foo()
 
 function s:foo() abort
 
