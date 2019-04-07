@@ -11,7 +11,7 @@ Using [deopletefs](https://github.com/callmekohei/deopletefs) that is command-li
 It's useful to write a small code in F# script file ( .fsx ) .
 
 ## Requires
-[mono](https://github.com/mono/mono)  ( >= Mono 5.4.0 )
+[mono](https://github.com/mono/mono)  ( >= Mono 5.4.0 )  
 [fsharp](https://github.com/fsharp/fsharp)
 
 ## Install
@@ -58,18 +58,21 @@ Example of deoplete setting
 " .vimrc ( or init.vim )
 
 " launch deoplete when vim/neovim startup.
+" Please do not use deoplete#enable() function.
 let g:deoplete#enable_at_startup = 1
 
-" remove dupulicate candidates
-call deoplete#custom#source('_',
-  \ 'converters', ['remove_overlap'])
+autocmd MyAutoCmd VimEnter * call s:foo()
 
-" refresh_always must be v:false
-call deoplete#custom#option({
-  \ 'auto_complete_delay': 0,
-  \ 'ignore_case': v:true,
-  \ 'refresh_always': v:false,
-\ })
+function s:foo() abort
+
+  call deoplete#custom#option({
+    \   'auto_refresh_delay' : 20
+    \ , 'min_pattern_length' : 999
+    \ , 'ignore_case'        : v:true
+    \ , 'refresh_always'     : v:false
+  \ })
+
+endfunction
 ```
 
 ---
