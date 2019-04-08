@@ -58,18 +58,15 @@ Example of deoplete setting
 " .vimrc ( or init.vim )
 
 autocmd MyAutoCmd VimEnter *.fsx,*.fs call s:foo()
-
 function s:foo() abort
-
   call deoplete#custom#option({
     \   'auto_refresh_delay' : 20
     \ , 'min_pattern_length' : 999
     \ , 'ignore_case'        : v:true
     \ , 'refresh_always'     : v:false
+    \ , 'ignore_sources' : {'fsharp':['member']}
   \ })
-
   call deoplete#enable()
-
 endfunction
 ```
 
