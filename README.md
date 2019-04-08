@@ -57,10 +57,6 @@ Example of deoplete setting
 ```vim
 " .vimrc ( or init.vim )
 
-" launch deoplete when vim/neovim startup.
-" Please do not use deoplete#enable() function.
-let g:deoplete#enable_at_startup = 1
-
 autocmd MyAutoCmd VimEnter *.fsx,*.fs call s:foo()
 
 function s:foo() abort
@@ -71,6 +67,8 @@ function s:foo() abort
     \ , 'ignore_case'        : v:true
     \ , 'refresh_always'     : v:false
   \ })
+
+  call deoplete#enable()
 
 endfunction
 ```
