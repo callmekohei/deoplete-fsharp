@@ -119,7 +119,10 @@ class Util():
         self.lines     = queue.Queue()
 
         ### launch deopletefs
-        command      = [ 'mono', self.exe_path ]
+        if os.name == 'nt':
+            command = [ self.exe_path ]
+        elif os.name == 'posix':
+            command = [ 'mono', self.exe_path ]
         opts         = { 'stdin': subprocess.PIPE, 'stdout': subprocess.PIPE, 'stderr': subprocess.PIPE, 'universal_newlines': True }
         self.process = subprocess.Popen( command , **opts )
         atexit.register(lambda: self.process.kill())
